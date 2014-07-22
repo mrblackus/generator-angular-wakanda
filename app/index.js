@@ -158,6 +158,19 @@ Generator.prototype.welcome = function welcome() {
   }
 };
 
+Generator.prototype.askForAngularAppName = function askForAngularAppName() {
+  var cb = this.async();
+
+  this.prompt([{
+    name: 'angularAppName',
+    message: "Name the folder where you want to put your angular app (leave blank - angularApp by default)"
+  }], function (props) {
+    this.angularAppName = props.angularAppName === "" ? 'angularApp' : props.angularAppName;
+    
+    cb();
+  }.bind(this));
+};
+
 Generator.prototype.askForCompass = function askForCompass() {
   var cb = this.async();
 
@@ -276,6 +289,45 @@ Generator.prototype.askForModules = function askForModules() {
 
     cb();
   }.bind(this));
+};
+
+Generator.prototype.createAngularAppFolder = function createAngularAppFolder() {
+  this.mkdir(this.angularAppName);
+};
+
+Generator.prototype.createAngularAppSpecificFiles = function createAngularAppSpecificFiles() {
+  var wakandaAppDefaultJson = {
+    host : "127.0.0.1",
+    port : "8081"
+  };
+  this.write(this.angularAppName+'/wakandaApp.default.json',JSON.stringify(wakandaAppDefaultJson,null,2));
+};
+
+Generator.prototype.createWakandaPackageJson = function createWakandaPackageJson() {
+  this.template('wakandaRoot/_package.json', 'package.json');
+};
+
+Generator.prototype.createWakandaGruntfile = function createWakandaGruntfile() {
+  this.template('wakandaRoot/_Gruntfile.js', 'Gruntfile.js');
+};
+
+Generator.prototype.installWakandaRootDependencies = function installWakandaRootDependencies() {
+  this.log('Now npm install in package.json dependencies in /');
+  this.installDependencies({
+    skipInstall: this.options['skip-install'],
+    skipMessage: this.options['skip-message'],
+    bower: false,
+    npm: true,
+    callback: this.afterInstallWakandaRootDependencies.bind(this)
+  });
+};
+
+Generator.prototype.afterInstallWakandaRootDependencies = function afterInstallWakandaRootDependencies() {
+  this.log('Now installing angular in /'+this.angularAppName+' folder');
+};
+
+Generator.prototype.switchProcessDirToAngularAppFolder = function switchProcessDirToAngularAppFolder() {
+  process.chdir(this.angularAppName);
 };
 
 Generator.prototype.readIndex = function readIndex() {
