@@ -140,10 +140,10 @@ util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.welcome = function welcome() {
   if (!this.options['skip-welcome-message']) {
-    this.log(yosay());
+    this.log(yosay("Welcome to the Angular/Wakanda yeoman Generator !"));
     this.log(
       chalk.magenta(
-        'Out of the box I include Bootstrap and some AngularJS recommended modules.' +
+        'Out of the box I include Bootstrap and some AngularJS recommended modules, as well as the Wakanda/AngularJS connector.' +
         '\n'
       )
     );
@@ -163,7 +163,7 @@ Generator.prototype.askForAngularAppName = function askForAngularAppName() {
 
   this.prompt([{
     name: 'angularAppName',
-    message: "Name the folder where you want to put your angular app (leave blank - angularApp by default)"
+    message: 'Name the folder where you want to put your angular app (leave blank - "angularApp" by default)'
   }], function (props) {
     this.angularAppName = props.angularAppName === "" ? 'angularApp' : props.angularAppName;
     
