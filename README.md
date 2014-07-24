@@ -46,6 +46,12 @@ WakandaProjectFolder
 ├── Gruntfile.js
 ├── .gitignore
 ```
+In result, you will have two levels of Gruntfile.js :
+
+* The one at the root where you can call tasks like `grunt wakCopy`
+* The one in your angularApp folder which contains exactly the same kind of tasks as you would expect from a regular Gruntfile.js made with `yo angular` like `grunt serve`, `grunt build` …
+
+
 
 ##Contributors
 

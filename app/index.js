@@ -307,6 +307,34 @@ Generator.prototype.createWakandaPackageJson = function createWakandaPackageJson
   this.template('wakandaRoot/_package.json', 'package.json');
 };
 
+//creates a new .gitignore file or merges it with the existing one
+Generator.prototype.createGitignore = function createGitignore() {
+  var gitignoreOriginal,
+          gitignoreBase,
+          output;
+  gitignoreBase = this.read('wakandaRoot/gitignore').split('\n');
+  try{
+    output = this.readFileAsString(path.join(this.destinationRoot(),'.gitignore'));
+  }
+  catch(e){
+    //no existing .gitignore file
+    output = "";
+  }
+  gitignoreOriginal = output.split('\n');
+  if(output !== ""){
+    this.log('Wakanda project - .gitignore file exists - merging it');
+  }
+  else{
+    this.log('Wakanda project - no existing .gitignore file - adding it');
+  }
+  gitignoreBase.forEach(function(item){
+    if(gitignoreOriginal.indexOf(item) === -1){
+      output += (output.length === 0 ? '' : '\n')+item;
+    }
+  });
+  fs.writeFileSync(path.join(this.destinationRoot(),'.gitignore'),output);
+};
+
 Generator.prototype.createWakandaGruntfile = function createWakandaGruntfile() {
   this.template('wakandaRoot/_Gruntfile.js', 'Gruntfile.js');
 };
