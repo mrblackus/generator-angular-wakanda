@@ -340,7 +340,7 @@ Generator.prototype.createWakandaGruntfile = function createWakandaGruntfile() {
 };
 
 Generator.prototype.installWakandaRootDependencies = function installWakandaRootDependencies() {
-  this.log('Now npm install in package.json dependencies in /');
+  this.log('Now npm install package.json dependencies in /');
   this.installDependencies({
     skipInstall: this.options['skip-install'],
     skipMessage: this.options['skip-message'],
