@@ -296,11 +296,9 @@ Generator.prototype.createAngularAppFolder = function createAngularAppFolder() {
 };
 
 Generator.prototype.createAngularAppSpecificFiles = function createAngularAppSpecificFiles() {
-  var wakandaAppDefaultJson = {
-    host : "127.0.0.1",
-    port : "8081"
-  };
-  this.write(this.angularAppName+'/wakandaApp.default.json',JSON.stringify(wakandaAppDefaultJson,null,2));
+  var wakandaAppDefaultJson = this.read('root/_wakandaApp.default.json');
+  this.write(this.angularAppName+'/wakandaApp.default.json',wakandaAppDefaultJson);
+  this.write(this.angularAppName+'/wakandaApp.json',wakandaAppDefaultJson);
 };
 
 Generator.prototype.createWakandaPackageJson = function createWakandaPackageJson() {

@@ -20,12 +20,47 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
+  
+  try{
+    var wakandaApp = require('./wakandaApp.json');
+  }
+  catch(e){
+    var currentTaskFromCli = process.argv.slice(2);
+    if(currentTaskFromCli.length && currentTaskFromCli[0] !== 'initConfig'){
+      grunt.fail.warn('wakandaApp.json file missing. Please run grunt initConfig to create it and then customize it');
+    }
+  }
+  
+  //to proxy the /rest/* request to your wakanda server
+  var proxyMiddleware = function (connect, options) {
+    var middlewares = [];
+    var directory = options.directory || options.base[options.base.length - 1];
+    if (!Array.isArray(options.base)) {
+      options.base = [options.base];
+    }
+    // Setup the proxy
+    middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+
+    options.base.forEach(function(base) {
+      // Serve static files.
+      middlewares.push(connect.static(base));
+    });
+
+    if(options.buildMode !== true){
+      middlewares.push(connect().use('/bower_components', connect.static('./bower_components')));//don't connect bower_components in build mode - it will be minified
+    }
+    
+    // Make directory browse-able.
+    middlewares.push(connect.directory(directory));
+    return middlewares;
+  };
 
   // Define the configuration for all the tasks
   grunt.initConfig({
 
     // Project settings
     yeoman: appConfig,
+    wakandaApp : wakandaApp,
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -78,6 +113,16 @@ module.exports = function (grunt) {
 
     // The actual grunt server settings
     connect: {
+      proxies : [
+        {
+          context: '/rest',
+          host: '<%%= wakandaApp.host %>',
+          port: '<%%= wakandaApp.port %>',
+          https: false,
+          changeOrigin: false,
+          xforward: false
+        }
+      ],
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
@@ -87,22 +132,17 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
-          }
+          base : [
+            '.tmp',
+            appConfig.app
+          ],
+          middleware: proxyMiddleware //proxy to wakanda server added
         }
       },
       test: {
         options: {
           port: 9001,
-          middleware: function (connect) {
+          middleware: function (connect) { //no proxy to wakanda added in unit-test mode
             return [
               connect.static('.tmp'),
               connect.static('test'),
@@ -118,7 +158,9 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%%= yeoman.dist %>'
+          buildMode : true,
+          base: '<%%= yeoman.dist %>',
+          middleware: proxyMiddleware //proxy to wakanda server added
         }
       }
     },
@@ -410,6 +452,10 @@ module.exports = function (grunt) {
         cwd: '<%%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      wakandaConfig: {
+        src: 'wakandaApp.default.json',
+        dest : 'wakandaApp.json'
       }
     },
 
@@ -449,7 +495,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
+      return grunt.task.run(['build', 'configureProxies:server', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
@@ -457,6 +503,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
+      'configureProxies:server', // added just before connect
       'connect:livereload',
       'watch'
     ]);
@@ -496,5 +543,9 @@ module.exports = function (grunt) {
     'newer:jshint',
     'test',
     'build'
+  ]);
+    
+  grunt.registerTask('initConfig',[
+    'copy:wakandaConfig'
   ]);
 };
