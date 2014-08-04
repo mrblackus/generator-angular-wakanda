@@ -16,7 +16,7 @@ var helpers = {
   },
   findWebFolderNameInWaProjectFile : function(fileName) {
     var parsedXml = null;
-    var finalResult = null
+    var finalResult = null;
     var file = fs.readFileSync(__dirname + '/'+fileName);
     var xmlParser = new require('xml2js').Parser({async:false});
     xmlParser.parseString(file,function(err, data){
@@ -28,7 +28,7 @@ var helpers = {
           if(item2.$.name === "webFolder"){
             finalResult = item1.$.path.replace('./','').replace('/','');
           }
-        })
+        });
       });
     }
     return finalResult;
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
   
   //find the name of the bower_components folder
   try{
-    bowerrc = require('./'+angularAppFolder+'/.bowerrc');
+    bowerrc = JSON.parse(fs.readFileSync(__dirname + '/'+angularAppFolder+'/.bowerrc'));
   }
   catch(e){
     bowerrc = {
@@ -154,5 +154,29 @@ module.exports = function (grunt) {
     'clean:wakandaProjectWebFolder',
     'copy:distToWakandaProjectWebFolder'
   ]);
+  
+  grunt.registerTask('serve',function(){
+    grunt.log.warn('You can\'t run this command here, more information in grunt help');
+  });
+  
+  grunt.registerTask('build',function(){
+    grunt.log.warn('You can\'t run this command here, more information in grunt help');
+  });
+  
+  grunt.registerTask('help',function(){
+    
+    grunt.log.writeln('This is the main grunt cmd line. You have access to tasks like :');
+    grunt.log.writeln('  grunt wakCopy');
+    grunt.log.writeln('  grunt wakCopyBuild');
+    grunt.log.writeln('');
+    grunt.log.writeln('to launch your angular application, just :');
+    grunt.log.writeln('  cd '+angularAppFolder);
+    grunt.log.writeln('then use any of the usual yeoman commands like :');
+    grunt.log.writeln('  grunt serve');
+    grunt.log.writeln('  grunt build');
+    
+  });
+  
+  grunt.registerTask('default',['help']);
   
 };

@@ -25,9 +25,9 @@ yo angular-wakanda [app-name]
 You will be asked a couple of questions like :
 
 * The name of the folder you want to put all the usual yo angular scaffold
-* Wheather you want to use Sass/Compass or not
-* Wheather you want to use Bootstrap or not
-* Which angular module you whish to include
+* Whether you want to use Sass/Compass or not
+* Whether you want to use Bootstrap or not
+* Which angular modules you whish to include
 
 Example of output directory tree :
 
@@ -51,7 +51,9 @@ In result, you will have two levels of Gruntfile.js :
 * The one at the root where you can call tasks like `grunt wakCopy`
 * The one in your angularApp folder which contains exactly the same kind of tasks as you would expect from a regular Gruntfile.js made with `yo angular` like `grunt serve`, `grunt build` …
 
+##Angular subgenerators available
 
+In your angularApp folder, you can run any of the [official yeoman generator-angular subgenerators](https://github.com/yeoman/generator-angular/blob/master/readme.md#generators).
 
 ##Contributors
 

@@ -130,6 +130,13 @@ var Generator = module.exports = function Generator(args, options) {
         args: ['about']
       });
     }
+    
+    //customize the main.html file @todo add the image
+    console.log(path.join(__dirname,'../templates','common/app/views/main.html'));
+    console.log(path.join(this.destinationRoot(),this.appPath,'views/main.html'));
+    fs.writeFileSync(path.join(this.destinationRoot(),this.appPath,'views/main.html'),fs.readFileSync(path.join(__dirname,'../templates','common/app/views/main.html')));
+    fs.writeFileSync(path.join(this.destinationRoot(),this.appPath,'images/wakanda.png'),fs.readFileSync(path.join(__dirname,'../templates','common/app/images/wakanda.png')));
+    
   });
 
   this.pkg = require('../package.json');
