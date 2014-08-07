@@ -1,6 +1,6 @@
 {
   "name": "generator-angular-wakanda",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha",
   "description": "Yeoman generator for Angular Wakanda",
   "keywords": [
     "yeoman-generator",
@@ -44,7 +44,7 @@
   },
   "licenses": [
     {
-      "type": "BSD"
+      "type": "MIT"
     }
   ]
 }

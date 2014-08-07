@@ -4,6 +4,7 @@
   "dependencies": {
     "angular": "<%= ngVer %>",
     "json3": "~3.3.1",
+    "angular-wakanda": "https://github.com/Wakanda/bower-angular-wakanda.git#d4a83426229baca4f00198126bf9bf83490d87f2",
     "es5-shim": "~3.1.0"<% if (bootstrap) { %>,<% if (!compassBootstrap) { %>
     "bootstrap": "~3.2.0"<% } else { %>
     "bootstrap-sass-official": "~3.2.0"<% } } %><% if (resourceModule) { %>,
