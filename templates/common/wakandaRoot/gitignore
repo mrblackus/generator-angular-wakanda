@@ -29,8 +29,8 @@ sessionID.json
 *.waRemoteModel
 #ANGULAR
 node_modules
-dist
-.tmp
-.sass-cache
-bower_components
-wakandaApp.json
+{angularAppName}/dist
+{angularAppName}/.tmp
+{angularAppName}/.sass-cache
+{angularAppName}/bower_components
+{angularAppName}/wakandaApp.json

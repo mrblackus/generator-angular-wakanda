@@ -250,6 +250,10 @@ Generator.prototype.askForModules = function askForModules() {
       value: 'touchModule',
       name: 'angular-touch.js',
       checked: true
+    }, {
+      value: 'wakandaModule',
+      name: 'angular-wakanda.js',
+      checked: true
     }
     ]
   }];
@@ -262,6 +266,7 @@ Generator.prototype.askForModules = function askForModules() {
     this.routeModule = hasMod('routeModule');
     this.sanitizeModule = hasMod('sanitizeModule');
     this.touchModule = hasMod('touchModule');
+    this.wakandaModule = hasMod('wakandaModule');
 
     var angMods = [];
 
@@ -290,6 +295,10 @@ Generator.prototype.askForModules = function askForModules() {
       angMods.push("'ngTouch'");
     }
 
+    if (this.wakandaModule) {
+      angMods.push("'wakanda'");
+    }
+
     if (angMods.length) {
       this.env.options.angularDeps = '\n    ' + angMods.join(',\n    ') + '\n  ';
     }
@@ -316,8 +325,11 @@ Generator.prototype.createWakandaPackageJson = function createWakandaPackageJson
 Generator.prototype.createGitignore = function createGitignore() {
   var gitignoreOriginal,
           gitignoreBase,
-          output;
-  gitignoreBase = this.read('wakandaRoot/gitignore').split('\n');
+          output,
+          that = this;
+  gitignoreBase = this.read('wakandaRoot/gitignore').split('\n').map(function(item){
+    return item.replace('{angularAppName}',that.angularAppName);
+  });
   try{
     output = this.readFileAsString(path.join(this.destinationRoot(),'.gitignore'));
   }
