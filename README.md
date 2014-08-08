@@ -2,6 +2,19 @@ generator-angular-wakanda
 =========================
 This generator lets you scaffold your AngularJS/Wakanda website.
 
+Disclaimer : Please note that this is a beta version of the generator-angular-wakanda which is still under development and testing.
+
+##Prerequisite
+
+Of course you need node, but you will also need the following modules to get the generator (and its grunt scripts) running :
+
+* bower (client dependencie) `npm install bower -g`
+* grunt-cli (grunt command line) `npm install grunt-cli -g`
+* yo (yeoman command line) `npm install yo -g`
+* karma (test runner - optionnal) `npm install karma - g`
+
+If you get into some troubles for the installation - see [notes](#notes) part.
+
 ##Usage
 
 Install `generator-angular-wakanda` :
@@ -38,12 +51,15 @@ WakandaProjectFolder
     ├── scripts
     ├── styles
     ├── index.html
-  ├── test
   ├── bower.json
-  ├── package.json
   ├── Gruntfile.js
-├── package.json
+  ├── node_modules
+  ├── package.json
+  ├── test
 ├── Gruntfile.js
+├── node_modules
+├── package.json
+├── WebFolder
 ├── .gitignore
 ```
 In result, you will have two levels of Gruntfile.js :
@@ -62,3 +78,8 @@ In your angularApp folder, you can run any of the [official yeoman generator-ang
 * `npm install`
 * If you already work with the genrator-angular-wakanda, you'll need to uninstall it : `npm uninstall generator-angular-wakanda -g`
 * In the repo directory : `npm link` (will let you use your local version of the generator)
+
+##Notes
+
+* If you have troubles installing modules, sometimes a `npm cache clean` can do the trick
+* If you are behind a proxy that doesn't allow git:// urls (problems for the bower install), take a look at [this link](https://coderwall.com/p/sitezg)
