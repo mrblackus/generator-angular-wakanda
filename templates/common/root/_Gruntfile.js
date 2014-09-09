@@ -9,6 +9,8 @@
 
 module.exports = function (grunt) {
 
+  var wakandaApp;
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -20,9 +22,9 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
-  
+
   try{
-    var wakandaApp = require('./wakandaApp.json');
+    wakandaApp = require('./wakandaApp.json');
   }
   catch(e){
     var currentTaskFromCli = process.argv.slice(2);
