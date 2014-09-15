@@ -2,7 +2,11 @@ generator-angular-wakanda
 =========================
 This generator lets you scaffold your AngularJS/Wakanda website.
 
-Disclaimer : Please note that this is a beta version of the generator-angular-wakanda which is still under development and testing.
+###Disclaimer
+
+THIS IS AN ALPHA RELEASE, AND ACTIVE DEVELOPMENT IS ONGOING. THE GENERATOR/CONNECTOR ANGULAR-WAKANDA ARE UNSTABLE AND NOT FINAL AND SHOULD NOT BE USED IN PRODUCTION (WHATEVER THAT MEANS FOR YOU).
+
+THE GENERATOR/CONNECTOR ANGULAR-WAKANDA ARE PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ##Prerequisite
 
@@ -11,7 +15,7 @@ Of course you need node, but you will also need the following modules to get the
 * bower (client dependencie) `npm install bower -g`
 * grunt-cli (grunt command line) `npm install grunt-cli -g`
 * yo (yeoman command line) `npm install yo -g`
-* karma (test runner - optionnal) `npm install karma - g`
+* karma (test runner - optionnal) `npm install karma -g`
 
 If you get into some troubles for the installation - see [notes](#notes) part.
 
@@ -83,3 +87,27 @@ In your angularApp folder, you can run any of the [official yeoman generator-ang
 
 * If you have troubles installing modules, sometimes a `npm cache clean` can do the trick
 * If you are behind a proxy that doesn't allow git:// urls (problems for the bower install), take a look at [this link](https://coderwall.com/p/sitezg)
+
+##License
+
+The MIT License (MIT)
+
+Copyright (C) 2014 4D SAS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

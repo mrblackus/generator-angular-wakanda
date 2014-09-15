@@ -352,6 +352,36 @@ Generator.prototype.createGitignore = function createGitignore() {
   fs.writeFileSync(path.join(this.destinationRoot(),'.gitignore'),output);
 };
 
+//creates a new parsingExceptions.json file or merges it with the existing one (only needs the entry "node_modules")
+Generator.prototype.createParsingExceptionsJson = function createParsingExceptionsJson(){
+  var output;
+  try{
+    output = this.readFileAsString(path.join(this.destinationRoot(),'parsingExceptions.json'));
+    try{
+      output = JSON.parse(output);
+    }
+    catch(e){
+      this.log('parsingExceptions.json is not valid, overwriting it.');
+      output = {};
+    }
+  }
+  catch(e){
+    this.log('No parsingExceptions.json file, creating one.');
+    output = {};
+  }
+  if(!output["excludedFolders"] || output["excludedFolders"] instanceof Array === false){
+    this.log('"node_modules" missing in parsingExceptions.json file - adding it');
+    output["excludedFolders"] = ["node_modules"];
+  }
+  else{
+    if(output["excludedFolders"].indexOf('node_modules') === -1){
+      this.log('"node_modules" missing in parsingExceptions.json file - adding it');
+      output["excludedFolders"].push('node_modules');
+    }
+  }
+  fs.writeFileSync(path.join(this.destinationRoot(),'parsingExceptions.json'),JSON.stringify(output,null,'  '));
+};
+
 Generator.prototype.createWakandaGruntfile = function createWakandaGruntfile() {
   this.template('wakandaRoot/_Gruntfile.js', 'Gruntfile.js');
 };
