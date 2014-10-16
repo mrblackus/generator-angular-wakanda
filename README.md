@@ -1,8 +1,14 @@
 generator-angular-wakanda
 =========================
+[![ angular-wakanda ](http://www.wakanda.org/sites/default/files/medias/128.png)](http://www.wakanda.org/angular-wakanda/)
+
+[![MIT Licensed](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](#license)
+
+*Wakanda® and 4D® are registered trademarks of 4D SAS in France and/or other countries. All other names mentioned may be trademarks or registered trademarks of their respective owners.*
+
 This generator lets you scaffold your AngularJS/Wakanda website.
 
-###Disclaimer
+###EXPERIMENTAL
 
 THIS IS AN ALPHA RELEASE, AND ACTIVE DEVELOPMENT IS ONGOING. THE GENERATOR/CONNECTOR ANGULAR-WAKANDA ARE UNSTABLE AND NOT FINAL AND SHOULD NOT BE USED IN PRODUCTION (WHATEVER THAT MEANS FOR YOU).
 
@@ -73,7 +79,12 @@ In result, you will have two levels of Gruntfile.js :
 
 ##Angular subgenerators available
 
-In your angularApp folder, you can run any of the [official yeoman generator-angular subgenerators](https://github.com/yeoman/generator-angular/blob/master/readme.md#generators).
+In your `angularApp` folder, you can run any of the [official yeoman generator-angular subgenerators](https://github.com/yeoman/generator-angular/blob/master/readme.md#generators).
+
+## Resources
+
+* [angular-wakanda connector](https://github.com/Wakanda/bower-angular-wakanda)
+* [Home page](http://www.wakanda.org/angular-wakanda/)
 
 ##Contributors
 
