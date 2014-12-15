@@ -231,6 +231,10 @@ Generator.prototype.askForModules = function askForModules() {
       name: 'angular-animate.js',
       checked: true
     }, {
+      value: 'ariaModule',
+      name: 'angular-aria.js',
+      checked: false
+    }, {
       value: 'cookiesModule',
       name: 'angular-cookies.js',
       checked: true
@@ -238,6 +242,10 @@ Generator.prototype.askForModules = function askForModules() {
       value: 'resourceModule',
       name: 'angular-resource.js',
       checked: true
+    }, {
+      value: 'messagesModule',
+      name: 'angular-messages.js',
+      checked: false
     }, {
       value: 'routeModule',
       name: 'angular-route.js',
@@ -261,7 +269,9 @@ Generator.prototype.askForModules = function askForModules() {
   this.prompt(prompts, function (props) {
     var hasMod = function (mod) { return props.modules.indexOf(mod) !== -1; };
     this.animateModule = hasMod('animateModule');
+    this.ariaModule = hasMod('ariaModule');
     this.cookiesModule = hasMod('cookiesModule');
+    this.messagesModule = hasMod('messagesModule');
     this.resourceModule = hasMod('resourceModule');
     this.routeModule = hasMod('routeModule');
     this.sanitizeModule = hasMod('sanitizeModule');
@@ -274,8 +284,16 @@ Generator.prototype.askForModules = function askForModules() {
       angMods.push("'ngAnimate'");
     }
 
+    if (this.ariaModule) {
+      angMods.push("'ngAria'");
+    }
+
     if (this.cookiesModule) {
       angMods.push("'ngCookies'");
+    }
+
+    if (this.messagesModule) {
+      angMods.push("'ngMessages'");
     }
 
     if (this.resourceModule) {
