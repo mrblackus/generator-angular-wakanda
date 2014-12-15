@@ -6,3 +6,4 @@ generator-angular-wakanda - release notes
 * updated the bower.json to match the last version of generator-angular
 	* upgrade angular from 1.2.x to 1.3.0
 	* added the latest modules shipped with 1.3.0 (aria, messages)
+* fixed proxy bug with AWS instances (missing host header)
