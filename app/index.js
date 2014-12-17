@@ -75,9 +75,17 @@ var Generator = module.exports = function Generator(args, options) {
     if (this.animateModule) {
       enabledComponents.push('angular-animate/angular-animate.js');
     }
+ 
+    if (this.ariaModule) {
+      enabledComponents.push('angular-aria/angular-aria.js');
+    }
 
     if (this.cookiesModule) {
       enabledComponents.push('angular-cookies/angular-cookies.js');
+    }
+ 
+    if (this.messagesModule) {
+      enabledComponents.push('angular-messages/angular-messages.js');
     }
 
     if (this.resourceModule) {
