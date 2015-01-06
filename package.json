@@ -1,6 +1,6 @@
 {
   "name": "generator-angular-wakanda",
-  "version": "0.2.3-alpha",
+  "version": "0.3.0",
   "description": "Yeoman generator for Angular Wakanda",
   "keywords": [
     "yeoman-generator",

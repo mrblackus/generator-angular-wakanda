@@ -1,9 +1,16 @@
 generator-angular-wakanda - release notes
 =========================================
 
-##v0.2.3-alpha
-* updated the peerDependency to last version (0.10.0) of generator-angular
+##v0.3.0
+* updated the peerDependency to generator-angular@0.10.0 + upgraded internal codebase https://github.com/yeoman/generator-angular/compare/v0.9.5...v0.10.0
 * updated the bower.json to match the last version of generator-angular
-	* upgrade angular from 1.2.x to 1.3.0
+	* upgrade angular from 1.2.x to 1.3.x
+	* upgrade angular-wakanda connector from 0.3.x to 0.4.x
 	* added the latest modules shipped with 1.3.0 (aria, messages)
 * fixed proxy bug with AWS instances (missing host header)
+
+If you had a previous version you may have to upgrade some dependencies (you'll be asked to).
+
+(may have to sudo) `npm update generator-angular generator-karma -g`
+
+Changelog : https://github.com/Wakanda/generator-angular-wakanda/compare/v0.2.2-alpha...v0.3.0
