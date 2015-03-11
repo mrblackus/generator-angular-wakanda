@@ -1,6 +1,11 @@
 generator-angular-wakanda - release notes
 =========================================
 
+##v0.3.1
+Fixed proxy bug between connect and Wakanda Server preventing some auth requests correctly pass by.
+
+Changelog : https://github.com/Wakanda/generator-angular-wakanda/compare/v0.3.0...v0.3.1
+
 ##v0.3.0
 * updated the peerDependency to generator-angular@0.10.0 + upgraded internal codebase https://github.com/yeoman/generator-angular/compare/v0.9.5...v0.10.0
 * updated the bower.json to match the last version of generator-angular
