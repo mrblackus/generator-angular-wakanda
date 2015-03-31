@@ -26,7 +26,7 @@ var Generator = module.exports = function Generator(args, options) {
 
   if (typeof this.env.options.appPath === 'undefined') {
     this.option('appPath', {
-      desc: 'Generate CoffeeScript instead of JavaScript'
+      desc: 'Allow to choose where to write the files'
     });
 
     this.env.options.appPath = this.options.appPath;
@@ -111,6 +111,15 @@ var Generator = module.exports = function Generator(args, options) {
 
     var jsExt = this.options.coffee ? 'coffee' : 'js';
 
+    var bowerComments = [
+      'bower:js',
+      'endbower'
+    ];
+    if (this.options.coffee) {
+      bowerComments.push('bower:coffee');
+      bowerComments.push('endbower');
+    }
+
     this.invoke('karma:app', {
       options: {
         'skip-install': this.options['skip-install'],
@@ -118,6 +127,7 @@ var Generator = module.exports = function Generator(args, options) {
         'coffee': this.options.coffee,
         'travis': true,
         'bower-components': enabledComponents,
+        'files-comments': bowerComments.join(','),
         'app-files': 'app/scripts/**/*.' + jsExt,
         'test-files': [
           'test/mock/**/*.' + jsExt,
@@ -138,7 +148,7 @@ var Generator = module.exports = function Generator(args, options) {
         args: ['about']
       });
     }
-    
+
     //customize the main.html file @todo add the image
     console.log(path.join(__dirname,'../templates','common/app/views/main.html'));
     console.log(path.join(this.destinationRoot(),this.appPath,'views/main.html'));
@@ -465,6 +475,7 @@ Generator.prototype.packageFiles = function packageFiles() {
   this.template('root/_bowerrc', '.bowerrc');
   this.template('root/_package.json', 'package.json');
   this.template('root/_Gruntfile.js', 'Gruntfile.js');
+  this.template('root/README.md', 'README.md');
 };
 
 Generator.prototype._injectDependencies = function _injectDependencies() {
@@ -476,18 +487,6 @@ Generator.prototype._injectDependencies = function _injectDependencies() {
       '\n' + chalk.yellow.bold('grunt wiredep')
     );
   } else {
-    wiredep({
-      directory: 'bower_components',
-      bowerJson: JSON.parse(fs.readFileSync('./bower.json')),
-      ignorePath: new RegExp('^(' + this.appPath + '|..)/'),
-      src: 'app/index.html',
-      fileTypes: {
-        html: {
-          replace: {
-            css: '<link rel="stylesheet" href="{{filePath}}">'
-          }
-        }
-      }
-    });
+    this.spawnCommand('grunt', ['wiredep']);
   }
 };
