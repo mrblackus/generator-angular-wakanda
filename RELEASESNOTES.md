@@ -1,6 +1,16 @@
 generator-angular-wakanda - release notes
 =========================================
 
+##v0.4.0
+* updated the peerDependency to generator-angular@0.11.1 + upgraded internal codebase https://github.com/yeoman/generator-angular/compare/v0.10.0...v0.11.1
+* fixed import of bootstrap assets on `grunt wakCopyBuild` (only sass version)
+
+If you had a previous version you may have to upgrade some dependencies (you'll be asked to).
+
+(may have to sudo) `npm update generator-karma -g`
+
+Changelog : https://github.com/Wakanda/generator-angular-wakanda/compare/v0.3.1...v0.4.0
+
 ##v0.3.1
 Fixed proxy bug between connect and Wakanda Server preventing some auth requests correctly pass by.
 
