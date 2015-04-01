@@ -116,6 +116,7 @@ module.exports = function (grunt) {
           cwd: '<%%= wakandaProject.angularAppFolder %>/<%%= wakandaProject.angularApp.dist %>',
           dest: '<%%= wakandaProject.webFolder %>',
           src: [
+            'bower_components/**/*',
             '*.{ico,png,txt}',
             '.htaccess',
             'robots.txt',
