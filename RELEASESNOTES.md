@@ -1,6 +1,11 @@
 generator-angular-wakanda - release notes
 =========================================
 
+##v0.4.1
+Copyright update.
+
+Changelog : https://github.com/Wakanda/generator-angular-wakanda/compare/v0.4.0...v0.4.1
+
 ##v0.4.0
 * updated the peerDependency to generator-angular@0.11.1 + upgraded internal codebase https://github.com/yeoman/generator-angular/compare/v0.10.0...v0.11.1
 * fixed import of bootstrap assets on `grunt wakCopyBuild` (only sass version)
