@@ -4,7 +4,7 @@ generator-angular-wakanda
 
 [![MIT Licensed](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](#license)
 
-*Wakanda® and 4D® are registered trademarks of 4D SAS in France and/or other countries. All other names mentioned may be trademarks or registered trademarks of their respective owners.*
+*Wakanda® is a registered trademark of WAKANDA SAS in France and/or other countries. All other names mentioned may be trademarks or registered trademarks of their respective owners.*
 
 This generator lets you scaffold your AngularJS/Wakanda website.
 
@@ -103,7 +103,7 @@ In your `angularApp` folder, you can run any of the [official yeoman generator-a
 
 The MIT License (MIT)
 
-Copyright (C) 2014 4D SAS
+Copyright (C) 2015 WAKANDA SAS
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
