@@ -1,6 +1,11 @@
 generator-angular-wakanda - release notes
 =========================================
 
+##v0.4.3
+* update reference link (https://github.com/Wakanda/bower-angular-wakanda to https://github.com/Wakanda/angular-wakanda)
+
+Changelog : https://github.com/Wakanda/generator-angular-wakanda/compare/v0.4.2...v0.4.3
+
 ##v0.4.2
 * updated the grunt-connect-proxy dependency to grunt-connect-proxy@0.2.0. It fixes issue described in https://github.com/drewzboto/grunt-connect-proxy/issues/97
 
