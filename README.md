@@ -83,7 +83,7 @@ In your `angularApp` folder, you can run any of the [official yeoman generator-a
 
 ## Resources
 
-* [angular-wakanda connector](https://github.com/Wakanda/bower-angular-wakanda)
+* [angular-wakanda connector](https://github.com/Wakanda/angular-wakanda)
 * [Home page](http://www.wakanda.org/angular-wakanda/)
 
 ##Contributors
