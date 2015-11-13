@@ -75,7 +75,7 @@ var Generator = module.exports = function Generator(args, options) {
     if (this.animateModule) {
       enabledComponents.push('angular-animate/angular-animate.js');
     }
- 
+
     if (this.ariaModule) {
       enabledComponents.push('angular-aria/angular-aria.js');
     }
@@ -83,7 +83,7 @@ var Generator = module.exports = function Generator(args, options) {
     if (this.cookiesModule) {
       enabledComponents.push('angular-cookies/angular-cookies.js');
     }
- 
+
     if (this.messagesModule) {
       enabledComponents.push('angular-messages/angular-messages.js');
     }
@@ -154,7 +154,7 @@ var Generator = module.exports = function Generator(args, options) {
     console.log(path.join(this.destinationRoot(),this.appPath,'views/main.html'));
     fs.writeFileSync(path.join(this.destinationRoot(),this.appPath,'views/main.html'),fs.readFileSync(path.join(__dirname,'../templates','common/app/views/main.html')));
     fs.writeFileSync(path.join(this.destinationRoot(),this.appPath,'images/wakanda.png'),fs.readFileSync(path.join(__dirname,'../templates','common/app/images/wakanda.png')));
-    
+
   });
 
   this.pkg = require('../package.json');
@@ -183,6 +183,21 @@ Generator.prototype.welcome = function welcome() {
   }
 };
 
+Generator.prototype.askForGulp = function askForGulp() {
+  var cb = this.async();
+
+  this.prompt([{
+    type: 'confirm',
+    name: 'gulp',
+    message: 'Would you like to use Gulp (experimental) instead of Grunt?',
+    default: false
+  }], function (props) {
+    this.gulp = props.gulp;
+
+    cb();
+  }.bind(this));
+};
+
 Generator.prototype.askForAngularAppName = function askForAngularAppName() {
   var cb = this.async();
 
@@ -191,20 +206,33 @@ Generator.prototype.askForAngularAppName = function askForAngularAppName() {
     message: 'Name the folder where you want to put your angular app (leave blank - "angularApp" by default)'
   }], function (props) {
     this.angularAppName = props.angularAppName === "" ? 'angularApp' : props.angularAppName;
-    
+
     cb();
   }.bind(this));
 };
 
-Generator.prototype.askForCompass = function askForCompass() {
+Generator.prototype.askForStyles = function askForStyles() {
+  var gulp = this.gulp;
   var cb = this.async();
 
   this.prompt([{
     type: 'confirm',
+    name: 'sass',
+    message: 'Would you like to use Sass?',
+    default: true,
+    when: function () {
+      return gulp;
+    }
+  }, {
+    type: 'confirm',
     name: 'compass',
     message: 'Would you like to use Sass (with Compass)?',
-    default: true
+    default: true,
+    when: function () {
+      return !gulp;
+    }
   }], function (props) {
+    this.sass = props.sass;
     this.compass = props.compass;
 
     cb();
@@ -213,6 +241,7 @@ Generator.prototype.askForCompass = function askForCompass() {
 
 Generator.prototype.askForBootstrap = function askForBootstrap() {
   var compass = this.compass;
+  var gulp = this.gulp;
   var cb = this.async();
 
   this.prompt([{
@@ -226,7 +255,7 @@ Generator.prototype.askForBootstrap = function askForBootstrap() {
     message: 'Would you like to use the Sass version of Bootstrap?',
     default: true,
     when: function (props) {
-      return props.bootstrap && compass;
+      return !gulp && (props.bootstrap && compass);
     }
   }], function (props) {
     this.bootstrap = props.bootstrap;
@@ -447,7 +476,8 @@ Generator.prototype.readIndex = function readIndex() {
 };
 
 Generator.prototype.bootstrapFiles = function bootstrapFiles() {
-  var cssFile = 'styles/main.' + (this.compass ? 's' : '') + 'css';
+  var sass = this.compass || this.sass;
+  var cssFile = 'styles/main.' + (sass ? 's' : '') + 'css';
   this.copy(
     path.join('app', cssFile),
     path.join(this.appPath, cssFile)
@@ -474,19 +504,24 @@ Generator.prototype.packageFiles = function packageFiles() {
   this.template('root/_bower.json', 'bower.json');
   this.template('root/_bowerrc', '.bowerrc');
   this.template('root/_package.json', 'package.json');
-  this.template('root/_Gruntfile.js', 'Gruntfile.js');
+  if (this.gulp) {
+    this.template('root/_gulpfile.js', 'gulpfile.js');
+  } else {
+    this.template('root/_Gruntfile.js', 'Gruntfile.js');
+  }
   this.template('root/README.md', 'README.md');
 };
 
 Generator.prototype._injectDependencies = function _injectDependencies() {
+  var taskRunner = this.gulp ? 'gulp' : 'grunt';
   if (this.options['skip-install']) {
     this.log(
       'After running `npm install & bower install`, inject your front end dependencies' +
       '\ninto your source code by running:' +
       '\n' +
-      '\n' + chalk.yellow.bold('grunt wiredep')
+      '\n' + chalk.yellow.bold(taskRunner + ' wiredep')
     );
   } else {
-    this.spawnCommand('grunt', ['wiredep']);
+    this.spawnCommand(taskRunner, ['wiredep']);
   }
 };
