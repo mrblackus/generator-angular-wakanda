@@ -504,6 +504,7 @@ Generator.prototype.packageFiles = function packageFiles() {
   this.template('root/_bower.json', 'bower.json');
   this.template('root/_bowerrc', '.bowerrc');
   this.template('root/_package.json', 'package.json');
+  this.template('root/.jshintrc', '.jshintrc');
   if (this.gulp) {
     this.template('root/_gulpfile.js', 'gulpfile.js');
   } else {

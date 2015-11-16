@@ -8,6 +8,7 @@ var lazypipe = require('lazypipe');
 var rimraf = require('rimraf');
 var wiredep = require('wiredep').stream;
 var runSequence = require('run-sequence');
+var proxy = require('http-proxy-middleware');
 
 var yeoman = {
   app: require('./bower.json').appPath || 'app',
@@ -91,10 +92,14 @@ gulp.task('start:server', function() {
     // Change this to '0.0.0.0' to access the server from outside.
     port: 9000,
     middleware: function (connect, opt) {
-      var Proxy = require('gulp-connect-proxy');
-      opt.route = '/rest';
-      var proxy = new Proxy(opt);
-      return [proxy];
+      return [
+        var wakandaApp = require('./wakandaApp.json');
+        proxy('/rest', {
+          target: 'http://' + wakandaApp.host + ':' + wakandaApp.port,
+          changeOrigin: false,
+          ws: true
+        })
+      ];
     }
   });
 });
