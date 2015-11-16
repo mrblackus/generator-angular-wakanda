@@ -235,6 +235,33 @@ module.exports = function (grunt) {
       app: {
         src: ['<%%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//
+      },
+      test: {
+        devDependencies: true,
+        src: '<%%= karma.unit.configFile %>',
+        ignorePath:  /\.\.\//,
+        fileTypes:{<% if (coffee) { %>
+          coffee: {
+            block: /(([\s\t]*)#\s*?bower:\s*?(\S*))(\n|\r|.)*?(#\s*endbower)/gi,
+              detect: {
+                js: /'(.*\.js)'/gi,
+                coffee: /'(.*\.coffee)'/gi
+              },
+            replace: {
+              js: '\'{{filePath}}\'',
+              coffee: '\'{{filePath}}\''
+            }
+          }<% } else { %>
+          js: {
+            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+              detect: {
+                js: /'(.*\.js)'/gi
+              },
+              replace: {
+                js: '\'{{filePath}}\','
+              }
+            }<% } %>
+          }
       }<% if (compass) { %>,
       sass: {
         src: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -548,6 +575,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'wiredep',
     'concurrent:test',
     'postcss',
     'connect:test',
