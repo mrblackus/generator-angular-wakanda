@@ -32,7 +32,7 @@ module.exports = function (grunt) {
       grunt.fail.warn('wakandaApp.json file missing. Please run grunt initConfig to create it and then customize it');
     }
   }
-  
+
   //to proxy the /rest/* request to your wakanda server
   var proxyMiddleware = function (connect, options) {
     var middlewares = [];
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
     if(options.buildMode !== true){
       middlewares.push(connect().use('/bower_components', connect.static('./bower_components')));//don't connect bower_components in build mode - it will be minified
     }
-    
+
     // Make directory browse-able.
     middlewares.push(connect.directory(directory));
     return middlewares;
@@ -203,9 +203,22 @@ module.exports = function (grunt) {
     },
 
     // Add vendor prefixed styles
-    autoprefixer: {
+    postcss: {
       options: {
-        browsers: ['last 1 version']
+        processors: [
+          require('autoprefixer-core')({browsers: ['last 1 version']})
+        ]
+      },
+      server: {
+        options: {
+          map: true
+        },
+        files: [{
+          expand: true,
+          cwd: '.tmp/styles/',
+          src: '{,*/}*.css',
+          dest: '.tmp/styles/'
+        }]
       },
       dist: {
         files: [{
@@ -319,8 +332,16 @@ module.exports = function (grunt) {
     usemin: {
       html: ['<%%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%%= yeoman.dist %>/styles/{,*/}*.css'],
+      js: ['<%%= yeoman.dist %>/scripts/{,*/}*.js'],
       options: {
-        assetsDirs: ['<%%= yeoman.dist %>','<%%= yeoman.dist %>/images']
+        assetsDirs: [
+          '<%%= yeoman.dist %>',
+          '<%%= yeoman.dist %>/images',
+          '<%%= yeoman.dist %>/styles'
+        ],
+        patterns: {
+          js: [[/(images\/[^''""]*\.(png|jpg|jpeg|gif|webp|svg))/g, 'Replacing references to images']]
+        }
       }
     },
 
@@ -387,6 +408,19 @@ module.exports = function (grunt) {
           src: ['*.html', 'views/{,*/}*.html'],
           dest: '<%%= yeoman.dist %>'
         }]
+      }
+    },
+
+    ngtemplates: {
+      dist: {
+        options: {
+          module: '<%= scriptAppName %>',
+          htmlmin: '<%%= htmlmin.dist.options %>',
+          usemin: 'scripts/scripts.js'
+        },
+        cwd: '<%%= yeoman.app %>',
+        src: 'views/{,*/}*.html',
+        dest: '.tmp/templateCache.js'
       }
     },
 
@@ -500,7 +534,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
-      'autoprefixer',
+      'postcss:server',
       'configureProxies:server', // added just before connect
       'connect:livereload',
       'watch'
@@ -515,7 +549,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
-    'autoprefixer',
+    'postcss',
     'connect:test',
     'karma'
   ]);
@@ -525,7 +559,8 @@ module.exports = function (grunt) {
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',
+    'postcss:server',
+    'ngtemplates',
     'concat',
     'ngAnnotate',
     'copy:dist',
@@ -542,7 +577,7 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-    
+
   grunt.registerTask('initConfig',[
     'copy:wakandaConfig'
   ]);
